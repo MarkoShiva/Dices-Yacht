@@ -143,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
             results.set(results.indexOf(maximum), 0);
             if (Collections.max(results) == 2){
                     rollScore = 750;
-                    msg1 = "You rolled full house. You get " + rollScore + " points";
+                    msg1 = "You rolled full house. Three of " + num + " and two of "
+                            + results.indexOf(Collections.max(results)) +
+                            " You get " + rollScore + " points";
                     score += rollScore;
                 }
             else {
@@ -155,12 +157,14 @@ public class MainActivity extends AppCompatActivity {
             results.set(results.indexOf(maximum), 0);
             if (Collections.max(results) == 2){
                 rollScore = 100;
-                msg1 = "You rolled a two pairs and get " + rollScore + " points";
+                msg1 = "You rolled a two pairs. Pair of " + num + " and pair of "
+                        + results.indexOf(Collections.max(results))+ ". " +
+                        "You get " + rollScore + " points";
                 score += rollScore;
             }
             else{
                 rollScore = 50;
-                msg1 = "You rolled a pair and get "+ rollScore +" points";
+                msg1 = "You rolled a pair of " + num + " and get "+ rollScore +" points";
                 score += rollScore;
             }
         }
