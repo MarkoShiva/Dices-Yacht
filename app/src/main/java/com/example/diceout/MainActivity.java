@@ -24,31 +24,18 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    // TextView field to have result
-    TextView rollResult;
+    TextView rollResult;     // TextView field to have result
+    TextView scoreText;      // TextView for the scores
 
-    TextView scoreText;
+    int score;               // Field to hold the score
 
+    Random rand;             // random instance
 
-    // Field to hold the score
-    int score;
+    ArrayList<Integer> dices;  // array dice values
 
-    // random instance
-    Random rand;
+    ArrayList<ImageView> diceImages;  // Array of dice field images
 
-    // die1 value
-    int die1;
-    int die2;
-    int die3;
-    int die4;
-    int die5;
-
-    // array dice values
-    ArrayList<Integer> dices;
-
-    // Array of images
-    ArrayList<ImageView> diceImages;
-
+    // Separate fields for dice images # Could replace with dynamic code.
     ImageView dice1Image;
     ImageView dice2Image;
     ImageView dice3Image;
@@ -81,56 +68,34 @@ public class MainActivity extends AppCompatActivity {
         rand = new Random();
 
         // init the dice
-        dices = new ArrayList<Integer>(5);
+        dices = new ArrayList<Integer>(Arrays.asList(new Integer[5]));
+        Collections.fill(dices, 0);
 
-        // Assign three images to the Array of images
+        // Create new ArrayList of ImageViews that will contain images
         diceImages = new ArrayList<ImageView>(5);
+
+        // Assign images and fields to the proper image
         dice1Image = findViewById(R.id.die1Image);
         dice2Image = findViewById(R.id.die2Image);
         dice3Image = findViewById(R.id.die3Image);
         dice4Image = findViewById(R.id.die4Image);
         dice5Image = findViewById(R.id.die5Image);
 
+        // Add them to the array
         diceImages.add(dice1Image);
         diceImages.add(dice2Image);
         diceImages.add(dice3Image);
         diceImages.add(dice4Image);
         diceImages.add(dice5Image);
 
-
-
-
         // Create greeting
         Toast.makeText(this, "Welcome to DiceOut", Toast.LENGTH_SHORT).show();
     }
     public void rollDice(View v){
-        rollResult.setText("Clicked");
-
-        // ToDo refactor to use the array instead of fields.
-        // That is a wrong way of doing things
-        // Roll dice
-        die1 = rand.nextInt(6) + 1;
-        die2 = rand.nextInt(6) + 1;
-        die3 = rand.nextInt(6) + 1;
-        die4 = rand.nextInt(6) + 1;
-        die5 = rand.nextInt(6) + 1;
-        // clear the array
-        dices.clear();
-        // populate the array
-        dices.add(die1);
-        dices.add(die2);
-        dices.add(die3);
-        dices.add(die4);
-        dices.add(die5);
-
-//        Collections.fill(dices, 5);
-
-        // better use array access and get rid of not needed fields.
-        // for some reason that do not work
-//        dice.set(0, rand.nextInt(6) + 1);
-//        dice.set(1, rand.nextInt(6) + 1);
-//        dice.set(2, rand.nextInt(6) + 1);
-
+        // fill array with dies dynamically
+        for (int die:dices) {
+            dices.set(dices.indexOf(die),rand.nextInt(6) + 1);
+        }
 
         // Printing dice sides
 
@@ -146,16 +111,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // Checking dice scores
-//        String msg = "You rolled " + die1 + " and a " + die2 + " and a " + die3;
-        String msg = "You rolled " + dices.get(0) + " and a " + dices.get(1) + " and a " + dices.get(2);
-        String msg1;
+        String msg1;  // Message to the user
+        // Create array to hold values from 1 to 6
         ArrayList<Integer> results = new ArrayList<Integer>(Arrays.asList(new Integer[7]));
-        Collections.fill(results, 0);
+        Collections.fill(results, 0); // fill them up with initial 0
         System.out.println(results);
-//        System.out.println(results.get(0) + " " + results.get(2));
 
-        // We use array fro 1 to 6 to store amount of each number rolls
+        // We use array from 1 to 6 to store amount of each number rolls
         // Here we loop through that array and assign a value of successful roll of a number
         for (int die: dices) {
             results.set(die, results.get(die) + 1);
@@ -210,9 +172,6 @@ public class MainActivity extends AppCompatActivity {
         rollResult.setText(msg1);
         scoreText.setText("Score: " + score);
 
-
-//        int num = rand.nextInt(6) + 1;
-//        String randValue = "Number generated " + num;
 //        Toast.makeText(this, randValue, Toast.LENGTH_SHORT).show();
     }
 
